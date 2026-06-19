@@ -9,9 +9,9 @@ public class PlayerOrbit : MonoBehaviour {
     private Vector3 force, distance;
 
     [Header("Control factors")]
-    [SerializeField] private float universalAttractionFactor = .05f;
-    [SerializeField] private float spaceResistance = .002f;
-    [SerializeField] private float forceClamp = .8f;
+    [SerializeField] private float universalAttractionFactor = 15f;
+    [SerializeField] private float spaceResistance = .00025f;
+    [SerializeField] private float forceClamp = 500f;
     [SerializeField] private Vector2 initialVelocity = new Vector2(0,0);
 
     [Header("Attractors")]

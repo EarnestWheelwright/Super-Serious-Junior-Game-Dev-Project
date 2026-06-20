@@ -15,6 +15,10 @@ public class OrbitController : MonoBehaviour
      * 4 - flinging
      */
     [SerializeField] private int orbitState;
+
+    [SerializeField] private float boostMultiplier = 2.0f;
+
+    [SerializeField] private bool pointTowardsVelocity = false;
     
 
     private readonly float DT = 0.015f; // artificial delta-t between updates
@@ -33,8 +37,8 @@ public class OrbitController : MonoBehaviour
         switch (orbitState) {
         case 1 : // steady state orbit/capture
             pos -= orbitingBody.position;
-            deltaPos += .025f * (orbitingBody.orbitRadius * pos.normalized - pos);
-            velocity += .025f * (orbitingBody.orbitSpeed * (velocity - pos*Vector2.Dot(pos,velocity)/pos.sqrMagnitude).normalized - velocity);
+            deltaPos += .01f * (orbitingBody.orbitRadius * pos.normalized - pos);
+            velocity += .5f * (orbitingBody.orbitSpeed * (velocity - pos*Vector2.Dot(pos,velocity)/pos.sqrMagnitude).normalized - velocity);
             break;
         case 2 : // outside of any SOI
             if (null == (orbitingBody = GetNearestGravityWell()) || SqDistanceToSOI(orbitingBody) > 0)
@@ -54,12 +58,16 @@ public class OrbitController : MonoBehaviour
             break;
         case 4 : // flinging
             // TODO: implement flinging
+            velocity *= boostMultiplier;
+            orbitState = 3;
             break;
         default:
             orbitState = 2;
             break;
         }
         transform.position += new Vector3(deltaPos.x, 0, deltaPos.y);
+        if (pointTowardsVelocity)
+            transform.eulerAngles = new Vector3(0,57.295f * (float) Math.Atan2(velocity.x, velocity.y),0);
     }
 
     // returns true when the point is in a viable orbit configuration

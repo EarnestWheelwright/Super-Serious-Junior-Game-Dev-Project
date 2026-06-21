@@ -42,12 +42,14 @@ public class OrbitController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (body == null) orbitState = 2; 
-        if (velocity == null) velocity = new Vector2(0,0);
-        if (orbitState == 1 && !CheckOrbitViability()) {
-            velocity = new Vector2(1,3.1415926535f);
+        if (body == null)
+            orbitState = 2;
+        
+        if (velocity == null)
+            velocity = new Vector2(0,0);
+        
+        if (orbitState == 1 && !CheckOrbitViability())
             orbitDistance = .5f * (body.orbitMinRadius + body.orbitMaxRadius);
-        }
     }
 
     // Update is called once per frame

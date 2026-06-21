@@ -136,9 +136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd40a3116c711c389ae8525a4fd0f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitBody
-  orbitRadius: 10
-  orbitRadiusTolerance: 1
-  orbitSpeed: 3
+  orbitMaxRadius: 0
+  orbitMinRadius: 0
+  SOIRadius: 0
+  SOIGravity: 0.1
+  orbitMaxSpeed: 0
   orbitSpeedTolerance: 0.5
 --- !u!1 &367715040
 GameObject:
@@ -1012,9 +1014,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd40a3116c711c389ae8525a4fd0f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitBody
-  orbitRadius: 3
-  orbitRadiusTolerance: 0.5
-  orbitSpeed: 3
+  orbitMaxRadius: 10
+  orbitMinRadius: 2.5
+  SOIRadius: 0
+  SOIGravity: 0.1
+  orbitMaxSpeed: 2
   orbitSpeedTolerance: 0.5
 --- !u!1 &2007941238 stripped
 GameObject:
@@ -1033,22 +1037,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf34be50a168c9bab1957d36ef0721f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitController
-  orbitingBody: {fileID: 1880624696}
+  body: {fileID: 0}
   velocity: {x: -1.5, y: 0}
   orbitState: 2
   boostMultiplier: 2
   pointTowardsVelocity: 1
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerOrbit
-  universalAttractionFactor: 15
-  spaceResistance: 0.00025
-  forceClamp: 500
-  initialVelocity: {x: 0, y: -4}
-  attractors:
-  - {fileID: 1880624691}
-  - {fileID: 1279646378}
-  gravityMultipliers:
-  - 1
-  - 0.5
+  orbitDistance: 0
 --- !u!1001 &2990702921668366903
 PrefabInstance:
   m_ObjectHideFlags: 0

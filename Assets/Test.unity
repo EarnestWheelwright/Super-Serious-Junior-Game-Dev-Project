@@ -353,7 +353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8085881980592725552, guid: acc09f15dfb0f0f46889561506060116, type: 3}
       propertyPath: m_Constraints
-      value: 100
+      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7944026809761380778, guid: acc09f15dfb0f0f46889561506060116, type: 3}
@@ -1040,9 +1040,10 @@ MonoBehaviour:
   body: {fileID: 0}
   velocity: {x: -1.5, y: 0}
   orbitState: 2
-  boostMultiplier: 2
+  flingingAcceleration: 2
   pointTowardsVelocity: 1
   orbitDistance: 0
+  flinging: 0
 --- !u!1001 &2990702921668366903
 PrefabInstance:
   m_ObjectHideFlags: 0

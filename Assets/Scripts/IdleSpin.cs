@@ -17,14 +17,12 @@ public class IdleSpin : MonoBehaviour
         thisObject = this.gameObject.transform;
         originalPosition = thisObject.position;
         thisObject.Rotate(startingRotationModifier);
-        thisObject.Translate(0,Mathf.Sin(startingBobPosition * 2 * Mathf.PI) * bobAmplitude,0);
     }
 
     // Update is called once per frame
     void Update()
     {
         thisObject.Rotate(rotSpeed * Time.deltaTime);
-        thisObject.Translate(0,0,0);
         thisObject.SetPositionAndRotation(new Vector3(thisObject.position.x, originalPosition.y + Mathf.Sin(2 * bobsPerSecond * Time.time + startingBobPosition * 2 * Mathf.PI) * bobAmplitude, thisObject.position.z), thisObject.rotation);
     }
 }

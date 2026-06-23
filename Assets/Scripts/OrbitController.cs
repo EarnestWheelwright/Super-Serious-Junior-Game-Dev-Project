@@ -15,13 +15,15 @@ public class OrbitController : MonoBehaviour
      */
     [SerializeField] private int orbitState;
 
-    [SerializeField] private float boostMultiplier = 2.0f;
+    [SerializeField] private float flingingAcceleration = 2.0f;
 
     [SerializeField] private bool pointTowardsVelocity = false;
 
     private float orbitCapturePercent = 0;
 
     public float orbitDistance;
+
+    public int flinging = 0;
     
     // Time between two simulated frames (calibrated to be ~= to real time for 60fps)
     private readonly float DT = 0.015f;
@@ -62,8 +64,8 @@ public class OrbitController : MonoBehaviour
             deltaPos += .01f * (orbitDistance * pos.normalized - pos);
             velocity += .5f * orbitCapturePercent * (((float)Math.Sqrt(body.keplerConstant/pos.magnitude)) * (velocity - pos*Vector2.Dot(pos,velocity)/pos.sqrMagnitude).normalized - velocity);
             if (orbitCapturePercent < 1) orbitCapturePercent += .0005f;
-            if (orbitDistance < body.orbitMinRadius || orbitDistance > body.orbitMaxRadius)
-                orbitState = 3;
+            if (orbitDistance < body.orbitMinRadius || orbitDistance > body.orbitMaxRadius) orbitState = 3;
+            if (flinging != 0) orbitState = 4;
             break;
         case 2 : // outside of any SOI
             if (null == (body = GetNearestGravityWell()) || SqDistanceToSOI(body) > 0)
@@ -91,9 +93,20 @@ public class OrbitController : MonoBehaviour
             }
             break;
         case 4 : // flinging
-            // TODO: implement flinging
-            velocity *= boostMultiplier;
-            orbitState = 3;
+            pos -= body.position;
+            deltaPos += .1f * (orbitDistance * pos.normalized - pos);
+            velocity -= pos*Vector2.Dot(pos,velocity)/pos.sqrMagnitude;
+            switch (flinging) {
+            case -1 :
+                velocity += flingingAcceleration*DT * new Vector2(-pos.y,pos.x).normalized;
+                break;
+            case 1 :
+                velocity -= flingingAcceleration*DT * new Vector2(-pos.y,pos.x).normalized;
+                break;
+            case 0 :
+                orbitState = 3;
+                break;
+            }
             break;
         default:
             orbitState = 2;

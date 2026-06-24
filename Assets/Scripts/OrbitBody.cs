@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OrbitBody : MonoBehaviour {
+    // length grapple stretched after one radian of orbit
+    public float grappleRadius = 1;
+
     // ideal distance that objects should orbit
     public float orbitMaxRadius = 0;
 
@@ -28,7 +31,7 @@ public class OrbitBody : MonoBehaviour {
     void Start() {
         orbitBodies.AddFirst(this);
         if (SOIRadius <= orbitMaxRadius)
-            SOIRadius = (float) Math.Sqrt(keplerConstant/SOIGravity);
+            SOIRadius = Mathf.Sqrt(keplerConstant/SOIGravity);
     }
 
     public float keplerConstant {

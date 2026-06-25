@@ -61,12 +61,12 @@ public class RocketController : MonoBehaviour
         if (throttle.x != 0 && fuel > 0) switch (orbit.state) {
         case 1 :
             orbit.setDistance += throttle.x * DT;
-            fuel -= throttle.x * DT;
+            fuel -= Mathf.Abs(throttle.x * DT);
             break;
         case 2 :
         case 3 :
             orbit.AddPerpVelocity(throttle.x * DT);
-            fuel -= throttle.x * DT;
+            fuel -= Mathf.Abs(throttle.x * DT);
             break;
         case 4 :
             // TODO : create whatever this should do
@@ -81,7 +81,7 @@ public class RocketController : MonoBehaviour
         case 2 :
         case 3 :
             orbit.AddTangVelocity(throttle.y * DT);
-            fuel -= throttle.x * DT;
+            fuel -= Mathf.Abs(throttle.y * DT);
             break;
         default:
             break;

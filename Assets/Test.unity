@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd40a3116c711c389ae8525a4fd0f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitBody
+  grappleRadius: 1
   orbitMaxRadius: 0
   orbitMinRadius: 0
   SOIRadius: 0
@@ -363,6 +364,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6247192670781515201, guid: acc09f15dfb0f0f46889561506060116, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2007941243}
+    - targetCorrespondingSourceObject: {fileID: 6247192670781515201, guid: acc09f15dfb0f0f46889561506060116, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2007941244}
   m_SourcePrefab: {fileID: 100100000, guid: acc09f15dfb0f0f46889561506060116, type: 3}
 --- !u!1001 &1254134077
 PrefabInstance:
@@ -1014,11 +1018,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd40a3116c711c389ae8525a4fd0f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitBody
+  grappleRadius: 1
   orbitMaxRadius: 10
-  orbitMinRadius: 5
+  orbitMinRadius: 3
   SOIRadius: 0
   SOIGravity: 0.1
-  orbitMaxSpeed: 2
+  orbitMaxSpeed: 5
   orbitSpeedTolerance: 0.5
 --- !u!1 &2007941238 stripped
 GameObject:
@@ -1039,11 +1044,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OrbitController
   body: {fileID: 0}
   velocity: {x: -1.5, y: 0}
-  orbitState: 2
+  state: 0
   flingingAcceleration: 2
   pointTowardsVelocity: 1
-  orbitDistance: 0
+  setDistance: 0
   flinging: 0
+--- !u!114 &2007941244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007941238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f636b538f04bcfc7da7923ee77b687f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RocketController
+  fuel: 100
+  throttle: {x: 0, y: 0}
+  wrapLength: 0
+  maxWrapLength: 100
+  retractGrapple: 1
+  unleashTheBeast: 0
 --- !u!1001 &2990702921668366903
 PrefabInstance:
   m_ObjectHideFlags: 0

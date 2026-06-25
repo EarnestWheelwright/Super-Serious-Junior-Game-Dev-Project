@@ -6,8 +6,9 @@ public class RocketController : MonoBehaviour
 {
     private OrbitController orbit;
     public float wrapAngle {
-        get;
-        private set;
+        get {
+            return wrapLength / orbit.body.grappleRadius;
+        }
     }
     public Vector2 wrapPoint {
         get {
@@ -19,14 +20,29 @@ public class RocketController : MonoBehaviour
     }
 
 
-    public float fuel;
-    public Vector2 throttle;
-    public float usedGrappleLength;
-    public float maxGrappleLength;
-    public int grappleStatus;
+    public float fuel = 100;
+    public Vector2 throttle = new Vector2();
+    public float wrapLength = 0;
+    public float maxWrapLength = 100;
+    public bool retractGrapple = true;
+
+    // TODO: get rid of this test thing
+    public bool unleashTheBeast = false;
 
     // Time passed between simulated frames
     private readonly float DT = .015f;
+
+    public void StartGrapple() {
+        retractGrapple = false;
+    }
+    public void PullGrapple() {
+        retractGrapple = true;
+    }
+
+    public void DetachGrapple() {
+        retractGrapple = true;
+        wrapLength = 0f;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,6 +54,9 @@ public class RocketController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // TODO: get rid of this
+        if (unleashTheBeast) DetachGrapple();
+
         // actions on x throttle
         if (throttle.x != 0 && fuel > 0) switch (orbit.state) {
         case 1 :
@@ -49,11 +68,11 @@ public class RocketController : MonoBehaviour
             orbit.AddPerpVelocity(throttle.x * DT);
             fuel -= throttle.x * DT;
             break;
-        case 4:
+        case 4 :
             // TODO : create whatever this should do
             // (should be like case 1 but no fuel use + new distance constraint)
             break;
-        default :
+        default:
             break;
         }
 
@@ -66,6 +85,28 @@ public class RocketController : MonoBehaviour
             break;
         default:
             break;
+        }
+
+        // actions on grapple
+        if (orbit.state != 2) {
+            float wrapChange = DT*orbit.tangVelocity*orbit.body.grappleRadius/orbit.distance;
+            if (retractGrapple) {
+                if (wrapLength != 0) orbit.flinging = (int) Mathf.Sign(wrapLength);
+                else orbit.flinging = 0;
+                float temp;
+                if (Mathf.Sign(temp = wrapLength + wrapChange) != Mathf.Sign(wrapLength))
+                    wrapLength = 0;
+                else
+                    wrapLength = temp;
+            } else {
+                wrapLength += wrapChange;
+            }
+
+            // TODO: make better max wrap functionality
+            // if (Mathf.Abs(wrapLength) > maxWrapLength)
+            //     orbit.AddTangVelocity(-orbit.tangVelocity);
+        } else {
+            wrapLength = 0;
         }
     }
 }

@@ -35,9 +35,15 @@ public class OrbitController : MonoBehaviour
         }
     }
 
+    public Vector2 relativePosition {
+        get {
+            return position - body.position;
+        }
+    }
+
     public float distance {
         get {
-            return Mathf.Abs((this.position - body.position).magnitude);
+            return relativePosition.magnitude;
         }
     }
 
@@ -45,6 +51,13 @@ public class OrbitController : MonoBehaviour
     public bool isReentering {
         get {
             return setDistance < body.orbitMinRadius;
+        }
+    }
+
+    public float tangVelocity {
+        get {
+            if (state == 2) return 0f;
+            return Vector2.Dot(velocity, new Vector2(body.position.y-position.y, position.x-body.position.x))/distance;
         }
     }
 
@@ -71,10 +84,10 @@ public class OrbitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 deltaPos = velocity * DT, pos = new Vector2(transform.position.x, transform.position.z);
+        Vector2 deltaPos = velocity * DT, pos = position;
         switch (state) {
         case 1 : // steady state orbit/capture
-            pos -= body.position;
+            pos = relativePosition;
             deltaPos += .01f * (setDistance * pos.normalized - pos);
             velocity += .5f * capturePercent * (Mathf.Sqrt(body.keplerConstant/pos.magnitude) * (velocity - pos*Vector2.Dot(pos,velocity)/pos.sqrMagnitude).normalized - velocity);
             if (capturePercent < 1) capturePercent += .0005f;

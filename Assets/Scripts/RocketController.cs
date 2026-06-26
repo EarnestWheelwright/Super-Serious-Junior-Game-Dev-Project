@@ -5,38 +5,21 @@ using UnityEngine;
 public class RocketController : MonoBehaviour
 {
     private OrbitController orbit;
-    public float wrapAngle {
-        get {
-            return wrapLength / orbit.body.grappleRadius;
-        }
-    }
+    
     public Vector2 wrapPoint {
         get {
             Vector2 p = new Vector2(transform.position.x,transform.position.z) - orbit.body.position;
             float r1 = orbit.body.grappleRadius;
-            float r2 = Mathf.Sign(wrapLength) * Mathf.Sqrt(p.sqrMagnitude - r1*r1);
+            float r2 = -Mathf.Sign(wrapLength) * Mathf.Sqrt(p.sqrMagnitude - r1*r1);
             return new Vector2(p.x*r1 - p.y*r2, p.x*r2 + p.y*r1) * r1/p.sqrMagnitude;
         }
     }
 
     public Vector3 wrapPointAbs {
         get {
-            Vector2 p = new Vector2(transform.position.x,transform.position.z) - orbit.body.position;
-            float r1 = orbit.body.grappleRadius;
-            float r2 = Mathf.Sign(wrapAngle) * Mathf.Sqrt(p.sqrMagnitude - r1*r1);
-            return new Vector3(p.x*r1 - p.y*r2, 0, p.x*r2 + p.y*r1) * r1/p.sqrMagnitude + orbit.body.position3D;
+            return new Vector3(wrapPoint.x, 0, wrapPoint.y) + orbit.body.position3D;
         }
     }
-
-    public float wrapMagnitude {
-        get {
-            Vector2 p = new Vector2(transform.position.x,transform.position.z) - orbit.body.position;
-            float r1 = orbit.body.grappleRadius;
-            float r2 = Mathf.Sign(wrapLength) * Mathf.Sqrt(p.sqrMagnitude - r1*r1);
-            return (new Vector2(p.x*r1 - p.y*r2, p.x*r2 + p.y*r1) * r1/p.sqrMagnitude - p).magnitude;
-        }
-    }
-
 
     public float fuel = 100;
     public Vector2 throttle = new Vector2();

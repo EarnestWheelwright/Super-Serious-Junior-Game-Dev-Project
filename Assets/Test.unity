@@ -155,6 +155,8 @@ GameObject:
   - component: {fileID: 367715042}
   - component: {fileID: 367715041}
   - component: {fileID: 367715044}
+  - component: {fileID: 367715045}
+  - component: {fileID: 367715046}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -229,12 +231,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367715040}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 21.01, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 52.525, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2007941247}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &367715044
 MonoBehaviour:
@@ -280,6 +282,82 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &367715045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367715040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73f93d18f6ed1d4f85f185f20184f7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraFollower
+  mousePos: {x: 0, y: 0}
+  verticalScrollableBounds: 2
+  upperVerticalScrollableBound: 0
+  lowerVerticalScrollableBound: 0
+  horizontalScrollableBounds: 2
+  rightHorizontalScrollableBound: 0
+  leftHorizontalScrollableBound: 0
+  maxHorizontalPan: 15
+  maxVerticalPan: 15
+  parent: {fileID: 2007941247}
+  hOffset: 0
+  aiming: 0
+  snappingSpeed: 50
+  frameUpdateTime: 0.5
+--- !u!114 &367715046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367715040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: f573051a73d82144c9e200ad39857ab8, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 88cc41f1-2842-4189-b612-53c47fb42400
+    m_ActionName: 'Player/MousePosition[/Mouse/position]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 367715045}
+        m_TargetAssemblyTypeName: CameraFollower, Assembly-CSharp
+        m_MethodName: onAimCamera
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 913d9d95-d41f-462e-9278-76ef7c6ed05e
+    m_ActionName: 'Player/Aim Camera[/Mouse/rightButton]'
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &538638877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -362,6 +440,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5896015408030097582, guid: acc09f15dfb0f0f46889561506060116, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 367715043}
       addedObject: {fileID: 1136610039}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6247192670781515201, guid: acc09f15dfb0f0f46889561506060116, type: 3}
@@ -1201,6 +1280,11 @@ Transform:
   m_PrefabInstance: {fileID: 538638877}
   m_PrefabAsset: {fileID: 0}
   orbitDistance: 0
+--- !u!4 &2007941247 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5896015408030097582, guid: acc09f15dfb0f0f46889561506060116, type: 3}
+  m_PrefabInstance: {fileID: 538638877}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &130875209043921894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1892,7 +1976,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 367715043}
   - {fileID: 1675662322}
   - {fileID: 1508422691}
   - {fileID: 1880624695}
